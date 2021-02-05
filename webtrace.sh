@@ -2,11 +2,13 @@
 
 url=$1
 time=$2
-case $(ps -o stat= -p $$) in
-	*+*) background=false;;
-	  *) background=true ;;
-esac
-((time < 0)) && one_time=true || one_time=false
+if ((time < 0)); then
+    time=-$time
+    background=true
+else
+    background=false
+fi
+
 urln=$(echo $url | sed -e "s/\//+/g")
 
 cd ~/.webtrace
@@ -34,7 +36,6 @@ while true; do
         $background && break;   # in background mode exiting loop after first found
     fi
     rm /tmp/webtracerpage__$urln
-	$one_time && break;
     sleep $time
 done
 
