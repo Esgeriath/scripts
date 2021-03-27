@@ -1,9 +1,14 @@
 #!/bin/bash
 
+if [[ $# != 2 ]]; then
+    echo "usage: $0 <url> <time>"
+    exit
+fi
+
 url=$1
 time=$2
 if ((time < 0)); then
-    time=-$time
+    (( time = -time ))
     background=true
 else
     background=false
