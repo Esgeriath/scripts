@@ -18,7 +18,7 @@ disk="$(echo $devices |
 disk="/dev/$(echo "$disk" | cut -f 1 -d ' ')"
 
 # If disk figures in fstab, mount it
-sudo mount "$disk" 2>&1 && exit 0
+sudo mount -o gid=users,umask=0000 "$disk" 2>&1 && exit 0
 
 # Otherwise ask where to mount
 mountpoint="$(find /mnt -maxdepth 3 -mount -type d |
@@ -26,5 +26,5 @@ mountpoint="$(find /mnt -maxdepth 3 -mount -type d |
 
 [ -z "$mountpoint" -o ! -d "$mountpoint" ] && exit 2
 
-sudo mount "$disk" "$mountpoint"
+sudo mount -o gid=users,umask=0000 "$disk" "$mountpoint"
 
