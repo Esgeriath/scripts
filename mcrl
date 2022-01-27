@@ -1,0 +1,23 @@
+#!/bin/sh
+# A script to download a bunch of links of a common type.
+# yeah, written to download anime easier, don't judge
+
+# note that format can specify directory different than cwd
+[ $# -gt 0 ] && idx="$1" || idx=1 # starting index
+[ $# -gt 1 ] && fmt="$2" || fmt="%02d.mp4"
+[ $# -gt 2 ] && file="$3"
+
+loop() {
+    while read -r link; do
+        # cda requires user agent header; idk about others
+        curl "$link" -o "$(printf "$fmt\n" $idx)" -H \
+            "user-agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0"
+        idx=$(( idx + 1 )) 
+    done
+}
+
+if [ -z "$file" ]; then
+    loop # if no file provided, read from stdin
+else
+    loop < "$file"
+fi

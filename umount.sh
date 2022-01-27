@@ -9,7 +9,7 @@ devices="$(lsblk -l |
     grep 'part /' |
     awk '{print $7" ("$1")"}')"
 
-disk="$(echo $devices |
+disk="$(echo "$devices" |
     dmenu -i -p 'Choose device')" 
 
 # TODO: it's not POSIX complient with [[ and =~, but works with dash
@@ -17,7 +17,7 @@ disk="$(echo $devices |
 
 mountpoint="$(echo "$disk" | cut -f 1 -d ' ')"
 
-[ -z "$mountpoint" -o ! -d "$mountpoint" ] && exit 2
+[ -z "$mountpoint" ] || [ ! -d "$mountpoint" ] && exit 2
 
 sudo umount "$mountpoint"
 

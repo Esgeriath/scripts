@@ -57,6 +57,6 @@ while true; do
     async_info
     sync_info
     update
-    sleep 1m
+    sleep 20
 done
 

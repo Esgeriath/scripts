@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # A script to display 16 base colors of terminal.
 

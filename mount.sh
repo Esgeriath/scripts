@@ -9,7 +9,7 @@ devices="$(lsblk -l |
     grep 'part $' |
     awk '{print $1" ("$4")"}')"
 
-disk="$(echo $devices |
+disk="$(echo "$devices" |
     dmenu -i -p 'Choose device')" 
 
 # TODO: it's not POSIX complient with [[ and =~, but works with dash
@@ -24,7 +24,7 @@ sudo mount -o gid=users,umask=0000 "$disk" 2>&1 && exit 0
 mountpoint="$(find /mnt -maxdepth 3 -mount -type d |
     dmenu -i -p 'Choose mountpoint' )"
 
-[ -z "$mountpoint" -o ! -d "$mountpoint" ] && exit 2
+[ -z "$mountpoint" ] || [ ! -d "$mountpoint" ] && exit 2
 
 sudo mount -o gid=users,umask=0000 "$disk" "$mountpoint"
 
