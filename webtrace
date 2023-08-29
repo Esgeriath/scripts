@@ -50,6 +50,8 @@ while true; do
     sleep $time
 done
 
+notify-send 'webtrace:' "new change in $url"
+
 $background || exit
 
 while true; do

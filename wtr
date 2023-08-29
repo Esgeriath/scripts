@@ -1,8 +1,10 @@
 #!/bin/sh
 
-# Shows weather in my hometown, in polish.
+# Shows weather in my hometown, in polish, or Wroclaw.
 # It is a one-liner, but it would be a pain to retype
 # request headers all the time.
 
-curl wttr.in/Oborniki%20Slaskie -H "Accept-Language: pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7"
+loc="Oborniki%20Slaskie"
+[ $# -gt 0 ] && loc="Wroclaw"
+curl wttr.in/$loc -H "Accept-Language: pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7"
 

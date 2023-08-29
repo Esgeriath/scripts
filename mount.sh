@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # A script to interactively mount usb drives using dmenu.
 # Idea stolen from Luke Smith
@@ -12,7 +12,7 @@ devices="$(lsblk -l |
 disk="$(echo "$devices" |
     dmenu -i -p 'Choose device')" 
 
-# TODO: it's not POSIX complient with [[ and =~, but works with dash
+# TODO: it's not POSIX complient with [[ and =~, but works with bash
 [[ -z "$disk" || ! "$devices" =~ "$disk" ]] && exit 1
 
 disk="/dev/$(echo "$disk" | cut -f 1 -d ' ')"
