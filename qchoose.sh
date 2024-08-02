@@ -2,16 +2,15 @@
 
 # if CHOICE="$(find "$HOME/cur-sem/" -type f -not -path '*/.*' | \
 #     sed "s@$HOME/cur-sem/@@" | \
-#     dmenu -i -c -l 10)"
+#     fuzzel -d -i -l 10)"
 if DIR="$(find -L "$HOME/cur-sem/" -maxdepth 1 -type d | \
-    xargs basename -a | grep -v "cur-sem" | dmenu -i -c -l 10)"; then
+    xargs basename -a | grep -v "cur-sem" | fuzzel -d )"; then
     if CHOICE="$(find "$HOME/cur-sem/$DIR" -maxdepth 1 | \
-        sed "s@$HOME/cur-sem/$DIR@@; /./!d" | \
-        dmenu -i -c -l 10)"; then
+        sed "s@$HOME/cur-sem/$DIR@@; /./!d" | fuzzel -d )"; then
         if [ -f "$HOME/cur-sem/$DIR/$CHOICE" ]; then
             case "$CHOICE" in
                 *.txt)
-                    lst -e "nvim" "$HOME/cur-sem/$DIR/$CHOICE"
+                    alacritty -e "nvim" "$HOME/cur-sem/$DIR/$CHOICE"
                 ;;
 
                 *.sh)
@@ -23,7 +22,7 @@ if DIR="$(find -L "$HOME/cur-sem/" -maxdepth 1 -type d | \
                 ;;
 
                 *.png | *.jpg)
-                    sxiv "$HOME/cur-sem/$DIR/$CHOICE"
+                    swayimg "$HOME/cur-sem/$DIR/$CHOICE"
                 ;;
                 
                 *)
@@ -31,7 +30,7 @@ if DIR="$(find -L "$HOME/cur-sem/" -maxdepth 1 -type d | \
                 ;;
             esac
         elif [ -d "$HOME/cur-sem/$DIR/$CHOICE" ]; then
-            lst -e vifm "$HOME/cur-sem/$DIR/$CHOICE"
+            alacritty --working-directory "$HOME/cur-sem/$DIR/$CHOICE"
         else
             exit 2
         fi

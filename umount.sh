@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# A script to interactively unmount usb drives using dmenu.
+# A script to interactively unmount usb drives using fzf.
 # Idea stolen from Luke Smith
 
 devices="$(lsblk -l |
@@ -10,7 +10,7 @@ devices="$(lsblk -l |
     awk '{print $7" ("$1")"}')"
 
 disk="$(echo "$devices" |
-    dmenu -i -p 'Choose device')" 
+    fzf --prompt='Choose device: ')" 
 
 # TODO: it's not POSIX complient with [[ and =~, but works with bash
 [[ -z "$disk" || ! "$devices" =~ "$disk" ]] && exit 1

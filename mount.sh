@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# A script to interactively mount usb drives using dmenu.
+# A script to interactively mount usb drives using fzf.
 # Idea stolen from Luke Smith
 
 devices="$(lsblk -l |
@@ -10,7 +10,7 @@ devices="$(lsblk -l |
     awk '{print $1" ("$4")"}')"
 
 disk="$(echo "$devices" |
-    dmenu -i -p 'Choose device')" 
+    fzf --prompt='Choose device: ')" 
 
 # TODO: it's not POSIX complient with [[ and =~, but works with bash
 [[ -z "$disk" || ! "$devices" =~ "$disk" ]] && exit 1
@@ -22,7 +22,7 @@ sudo mount -o gid=users,umask=0000 "$disk" 2>&1 && exit 0
 
 # Otherwise ask where to mount
 mountpoint="$(find /mnt -maxdepth 3 -mount -type d |
-    dmenu -i -p 'Choose mountpoint' )"
+    fzf --prompt='Choose mountpoint' )"
 
 [ -z "$mountpoint" ] || [ ! -d "$mountpoint" ] && exit 2
 
